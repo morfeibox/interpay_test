@@ -1,11 +1,14 @@
 <?php
-class ViewBook extends Book {
 
-    public function showSearchedBooks() {
+class ViewBook extends Book
+{
+
+    public function showSearchedBooks()
+    {
         $authors = $this->getSearchedBooks();
-        foreach($authors as $author){
-            echo $author['author']. "<br>";
-            echo $author['book']. "<br>";
+        foreach ($authors as $author) {
+            echo $author['author'] . "<br>";
+            echo $author['book'] . "<br>";
         }
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+<book>
+   <author>Isak Azimov</author>
+    <name>End of spiritd</name>
+</book>
+<book>
+    <author>Tripled</author>
+    <name>Standard</name>
+</book>
+    <book>
+        <author>TEST</author>
+        <name>TEST1</name>
+    </book>
+</document>
