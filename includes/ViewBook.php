@@ -7,7 +7,7 @@ class ViewBook extends Book
     {
         $authors = $this->getSearchedBooks();
         foreach ($authors as $author) {
-            echo $author['author'] . "<br>";
+           // echo $author['author'] . "<br>";
             echo $author['book'] . "<br>";
         }
     }

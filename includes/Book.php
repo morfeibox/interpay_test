@@ -17,34 +17,26 @@ class Book extends CommDB
         }
     }
 
-
-    // We need to clarify if there two authors with the same name can exist in one document &
-    // if there can be two authors with the sam name at different documents <
     public function insertUpdateRecords($author, $name, $path, $filename)
     {
         $now = date('Y-m-d H:i:s');
         $sql = $this->connect()
             ->prepare(
-                "SELECT * FROM book WHERE file_path = '{$path}' AND file_name = '{$filename}' AND author = '{$author}'");
+                "SELECT * FROM book WHERE file_path = '{$path}' AND file_name = '{$filename}' AND author = '{$author}' AND book = '{$name}' AND is_processed = true");
         $sql->execute();
         $fetch = $sql->fetch(PDO::FETCH_ASSOC);
-        if (!$fetch) {
+        var_dump($fetch['id']);
+        if (!is_array($fetch)) {
             $sql = $this->connect()
-                ->prepare("INSERT INTO book (author, book, file_path, file_name, created_on) VALUES ('{$author}', '{$name}', '{$path}', '{$filename}', '{$now}')");
+                ->prepare("INSERT INTO book (author, book, file_path, file_name, created_on, is_processed) VALUES ('{$author}', '{$name}', '{$path}', '{$filename}', '{$now}', true)");
+            $sql->execute();
+            $fetch = $sql->fetch(PDO::FETCH_ASSOC);
+        } else {
+            $sql = $this->connect()
+                ->prepare("UPDATE book SET author = '{$author}', book = '{$name}', created_on = '{$now}', updated_on= '{$now}' WHERE id = '{$fetch['id']}'");
             $sql->execute();
         }
 
-        $sql = $this->connect()
-            ->prepare("SELECT * FROM book WHERE file_path = '{$path}' AND file_name = '{$filename}' AND author = '{$author}' AND book != '{$name}' ");
-        $sql->execute();
-        $fetch = $sql->fetch(PDO::FETCH_ASSOC);
-
-        if ($fetch) {
-            //update
-            $sql = $this->connect()
-                ->prepare("UPDATE book SET  book = '{$name}', updated_on = '{$now}'  WHERE file_path = '{$path}' AND file_name = '{$filename}' AND author = '{$author}'");
-            $sql->execute();
-        }
     }
 
 }

@@ -12,4 +12,13 @@
         <author>TEST</author>
         <name>TEST1</name>
     </book>
+    <book>
+        <author>TEST</author>
+        <name>TEST2</name>
+    </book>
+    <book>
+        <author>TEST</author>
+        <name>TEST9</name>
+    </book>
+
 </document>
