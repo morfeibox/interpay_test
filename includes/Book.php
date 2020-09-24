@@ -5,7 +5,7 @@ class Book extends CommDB
 
     protected function getSearchedAuthors($search)
     {
-        if($search) {
+        if ($search) {
             $search = strtolower(trim($search));
             $sql = "SELECT * FROM book WHERE LOWER(author) LIKE '%{$search}%'";
             $result = $this->connect()->query($sql);
@@ -32,7 +32,6 @@ class Book extends CommDB
             $sql = $this->connect()
                 ->prepare("INSERT INTO book (author, book, file_path, file_name, created_on, is_processed) VALUES ('{$author}', '{$name}', '{$path}', '{$filename}', '{$now}', true)");
             $sql->execute();
-            $fetch = $sql->fetch(PDO::FETCH_ASSOC);
         } else {
             $sql = $this->connect()
                 ->prepare("UPDATE book SET author = '{$author}', book = '{$name}', created_on = '{$now}', updated_on= '{$now}' WHERE id = '{$fetch['id']}'");

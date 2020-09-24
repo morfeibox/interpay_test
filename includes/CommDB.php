@@ -14,6 +14,11 @@ class CommDB
         $this->username = "postgres";
         $this->password = "root";
         $this->dbname = "postgres";
-        return new PDO("pgsql:host={$this->servername}; dbname={$this->dbname}", "{$this->username}", "{$this->password}");
+
+        try {
+            return new PDO("pgsql:host={$this->servername}; dbname={$this->dbname}", "{$this->username}", "{$this->password}");
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 }

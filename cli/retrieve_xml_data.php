@@ -8,14 +8,26 @@ $files = new RecursiveIteratorIterator($dir);
 
 foreach ($files as $file) {
 
-    $path = $file->getPath();
-    $filename = $file->getFileName();
+    if ($file->getExtension() == "xml") {
 
-    $string = file_get_contents($file->getPath() . '/' . $file->getFileName());
-    $xml = simplexml_load_string($string);
+        $path = $file->getPath();
+        $filename = $file->getFileName();
 
-    foreach ($xml->book as $item) {
-        $book->insertUpdateRecords((string) $item->author, (string) $item->name, $path, $filename);
+        // Simple Validation with XMLReader <
+        $xml = new XMLReader();
+        $xml->open($file->getPath() . '/' . $file->getFileName());
+        $xml->setParserProperty(XMLReader::VALIDATE, true);
+
+        if ($xml->isValid()) {
+            $string = file_get_contents($file->getPath() . '/' . $file->getFileName());
+            $doc = simplexml_load_string($string) or die("Error: Cannot create object");
+            foreach ($doc->book as $item) {
+                $book->insertUpdateRecords((string) $item->author, (string) $item->name, $path, $filename);
+            }
+        } else {
+            echo "Invalid document : " . $file->getPath() . '/' . $file->getFileName();
+        }
+
     }
 }
 
