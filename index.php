@@ -101,7 +101,7 @@ include 'includes/ViewBook.php';
 <body>
 <div class="container">
     <div class="section-form">
-        <form action="" method="GET">
+        <form action="" method="POST">
             <input type="text" name="query"/>
             <button type="submit" name="submit">Search</button>
         </form>
@@ -109,11 +109,11 @@ include 'includes/ViewBook.php';
     <div class="section-table">
         <?php
         $books = new ViewBook();
-        if (isset($_GET['submit'])) {
-            if (empty($_GET['query'])) {
+        if (isset($_POST['submit'])) {
+            if (empty($_POST['query'])) {
                 echo "<div class=\"message\">Enter a search term</div>";
             }
-            $query = $_GET['query'];
+            $query = $_POST['query'];
 
         }
         if ($query) {
@@ -124,4 +124,3 @@ include 'includes/ViewBook.php';
 </div>
 </body>
 </html>
-

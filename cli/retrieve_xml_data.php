@@ -3,11 +3,11 @@ include '../includes/CommDB.php';
 include '../includes/Book.php';
 
 $book = new Book();
-$dir = new RecursiveDirectoryIterator('../docs/', RecursiveDirectoryIterator::SKIP_DOTS);
+$dir = new RecursiveDirectoryIterator('../xmldocs/', RecursiveDirectoryIterator::SKIP_DOTS);
 $files = new RecursiveIteratorIterator($dir);
+echo "Start \n";
 
 foreach ($files as $file) {
-
     if ($file->getExtension() == "xml") {
 
         $path = $file->getPath();
@@ -30,5 +30,5 @@ foreach ($files as $file) {
 
     }
 }
-
+echo "Finish importing files \n";
 ?>

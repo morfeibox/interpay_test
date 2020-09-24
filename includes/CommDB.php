@@ -13,7 +13,7 @@ class CommDB
         $this->servername = "localhost";
         $this->username = "postgres";
         $this->password = "root";
-        $this->dbname = "postgres";
+        $this->dbname = "interpay_test";
 
         try {
             return new PDO("pgsql:host={$this->servername}; dbname={$this->dbname}", "{$this->username}", "{$this->password}");
