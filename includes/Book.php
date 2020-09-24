@@ -3,17 +3,20 @@
 class Book extends CommDB
 {
 
-    protected function getSearchedBooks()
+    protected function getSearchedAuthors($search)
     {
-        $sql = "SELECT * FROM book";
-        $result = $this->connect()->query($sql);
-        $num_rows = $result->rowCount();
+        if($search) {
+            $search = strtolower(trim($search));
+            $sql = "SELECT * FROM book WHERE LOWER(author) LIKE '%{$search}%'";
+            $result = $this->connect()->query($sql);
+            $num_rows = $result->rowCount();
 
-        if ($num_rows > 0) {
-            while ($row = $result->fetch()) {
-                $data[] = $row;
+            if ($num_rows > 0) {
+                while ($row = $result->fetch()) {
+                    $data[] = $row;
+                }
+                return $data;
             }
-            return $data;
         }
     }
 
@@ -25,7 +28,6 @@ class Book extends CommDB
                 "SELECT * FROM book WHERE file_path = '{$path}' AND file_name = '{$filename}' AND author = '{$author}' AND book = '{$name}' AND is_processed = true");
         $sql->execute();
         $fetch = $sql->fetch(PDO::FETCH_ASSOC);
-        var_dump($fetch['id']);
         if (!is_array($fetch)) {
             $sql = $this->connect()
                 ->prepare("INSERT INTO book (author, book, file_path, file_name, created_on, is_processed) VALUES ('{$author}', '{$name}', '{$path}', '{$filename}', '{$now}', true)");

@@ -3,7 +3,6 @@ include 'includes/CommDB.php';
 include 'includes/Book.php';
 include 'includes/ViewBook.php';
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,10 +14,23 @@ include 'includes/ViewBook.php';
     <style type="text/css"></style>
 </head>
 <body>
+<form action="" method="GET">
+    <input type="text" name="query" />
+    <input type="submit" name="submit" value="Search" />
+</form>
 <?php
 $books = new ViewBook();
-$books->showSearchedBooks();
+if(isset($_GET['submit'])){
+    if(empty($_GET['query'])){
+        echo "Enter a search term";
+    }
+    $query = $_GET['query'];
+
+}
+if($query) {
+    echo $books->showSearchedAuthors($query);
+}
 ?>
-<script type="text/javascript"></script>
+
 </body>
 </html>
