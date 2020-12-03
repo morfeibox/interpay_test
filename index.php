@@ -2,6 +2,7 @@
 include 'includes/CommDB.php';
 include 'includes/Book.php';
 include 'includes/ViewBook.php';
+include 'includes/ValidateForm.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -102,7 +103,7 @@ include 'includes/ViewBook.php';
 <div class="container">
     <div class="section-form">
         <form action="" method="POST">
-            <input type="text" name="query"/>
+            <input type="text" name="query" maxlength="200"/>
             <button type="submit" name="submit">Search</button>
         </form>
     </div>
@@ -112,13 +113,18 @@ include 'includes/ViewBook.php';
         if (isset($_POST['submit'])) {
             if (empty($_POST['query'])) {
                 echo "<div class=\"message\">Enter a search term</div>";
+            } else {
+                $validate = new ValidateForm();
+                // Recommended just to validate user input not try guess user mistake
+                if($validate->validateUserInput($_POST['query'])){
+                    $query = $_POST['query'];
+                } else {
+                    // Return generic message not show to the user our validation strategy
+                    echo "<div class=\"message\">This name is not allowed book name</div>";
+                }
             }
-            $query = $_POST['query'];
+        }
 
-        }
-        if ($query) {
-            echo $books->showSearchedAuthors($query);
-        }
         ?>
     </div>
 </div>
